@@ -2,11 +2,6 @@
 
 ## Description
 
-**RéseauCRUD** is a simple web application to manage user profiles and publications.  
-It allows you to create, read, update, and delete profiles and publications via a clean and intuitive interface.
-
----
-
 **RéseauCRUD** est une application web simple pour gérer les profils utilisateurs et les publications.  
 Elle permet de créer, lire, modifier et supprimer des profils et publications via une interface claire et intuitive.
 
