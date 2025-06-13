@@ -1,3 +1,37 @@
+# RéseauCRUD
+
+## Description
+
+**RéseauCRUD** is a simple web application to manage user profiles and publications.  
+It allows you to create, read, update, and delete profiles and publications via a clean and intuitive interface.
+
+---
+
+**RéseauCRUD** est une application web simple pour gérer les profils utilisateurs et les publications.  
+Elle permet de créer, lire, modifier et supprimer des profils et publications via une interface claire et intuitive.
+
+---
+
+## Features / Fonctionnalités
+
+- Page d'accueil (Home)  
+- Voir tous les profils utilisateurs (Tous les profils)  
+- Ajouter un nouveau profil (Ajouter profil)  
+- Ajouter une nouvelle publication (Ajouter publications)  
+- Modification et suppression des profils et publications  
+- Interface simple et responsive  
+
+---
+
+## Technologies Used / Technologies utilisées
+
+- Backend : (Laravel / PHP)  
+- Frontend : (Bootstrap, html)  
+- Database : (MySQL)  
+- Version Control : Git & GitHub  
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
