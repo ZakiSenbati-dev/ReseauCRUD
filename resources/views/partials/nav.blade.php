@@ -20,6 +20,9 @@
             <li class="nav-item">
             <a class="nav-link" href="{{ route('profiles.create') }}"><i class="bi bi-plus-circle me-1"></i> Ajouter profil</a>
             </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ route('publications.index') }}"><i class="bi-file-post me-1"></i> Publications</a>
+            </li>
             @auth
             <li class="nav-item">
             <a class="nav-link" href="{{ route('publications.create') }}"><i class="bi-journal-text me-1"></i> Ajouter publication</a>

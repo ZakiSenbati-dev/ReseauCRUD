@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Publication;
 use Illuminate\Http\Request;
-use App\Http\Requests\PublicationRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\PublicationRequest;
 
 class PublicationController extends Controller
 {
@@ -60,6 +61,11 @@ class PublicationController extends Controller
      */
     public function edit(Publication $publication)
     {
+        //Autorisation:
+        //Gate (Routes)
+        //Policies (Controllers)
+        
+
         return view('publication.edit', compact('publication'));
     }
 
@@ -68,6 +74,7 @@ class PublicationController extends Controller
      */
     public function update(publicationRequest $request, Publication $publication)
     {
+        Gate::authorize('update-publication', $publication);
         $formFields = $request->validated();
         if ($request->hasFile('image')) {
         $formFields['image'] = $request->file('image')->store('publications', 'public');
