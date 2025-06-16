@@ -64,7 +64,7 @@ class PublicationController extends Controller
         //Autorisation:
         //Gate (Routes)
         //Policies (Controllers)
-        
+        $this->authorize('update', $publication);
 
         return view('publication.edit', compact('publication'));
     }

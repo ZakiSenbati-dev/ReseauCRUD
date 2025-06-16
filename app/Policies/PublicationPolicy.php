@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\publication;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\GenericUser;
 
 class publicationPolicy
 {
@@ -45,7 +46,7 @@ class publicationPolicy
      */
     public function delete(User $user, publication $publication): bool
     {
-        //
+        return $user->id === $publication->profile_id;
     }
 
     /**
@@ -63,4 +64,6 @@ class publicationPolicy
     {
         //
     }
+
+    
 }

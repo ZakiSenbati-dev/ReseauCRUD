@@ -11,17 +11,19 @@
                 </a>
             </div>
             <div class="col-md-6 text-end">
-                @auth
-                    @if ($canUpdate === true)
-                        <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-sm btn-primary me-2">Modifier</a>
-                        <form action="{{ route('publications.destroy', $publication->id) }}" method="POST" class="d-inline"
-                            onsubmit="return confirm('Voulez-vous vraiment supprimer cette publication ?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" type="submit">Supprimer</button>
-                        </form>
-                    @endif
-                @endauth
+                @can('update', $publication)
+                    <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-sm btn-primary me-2">Modifier</a>
+                @endcan
+
+                @can('delete', $publication)
+                    <form action="{{ route('publications.destroy', $publication->id) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('Voulez-vous vraiment supprimer cette publication ?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger" type="submit">Supprimer</button>
+                    </form>
+                @endcan
+
             </div>
         </div>
 
