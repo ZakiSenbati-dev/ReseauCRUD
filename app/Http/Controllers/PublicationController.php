@@ -74,7 +74,7 @@ class PublicationController extends Controller
      */
     public function update(publicationRequest $request, Publication $publication)
     {
-        Gate::authorize('update-publication', $publication);
+        $this->authorize('update', $publication);
         $formFields = $request->validated();
         if ($request->hasFile('image')) {
         $formFields['image'] = $request->file('image')->store('publications', 'public');

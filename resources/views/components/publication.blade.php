@@ -31,7 +31,7 @@
         <p class="card-text">{{ $publication->body }}</p>
 
         @if (!is_null($publication->image) && file_exists(public_path("storage/{$publication->image}")))
-            <img class="img-fluid rounded mt-3"  style="max-width: 90%; height: auto;"
+            <img class="img-fluid rounded mt-3"  style="max-width: 100%; height: auto;"
              src="{{ asset("storage/{$publication->image}") }}" alt="{{ $publication->titre }}">
         @endif
     </div>
