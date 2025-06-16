@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
@@ -22,7 +24,10 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formFields = $request->all();
+        $formFields['password'] = Hash::make($request->password);
+
+        return Profile::create($formFields);
     }
 
     /**
@@ -38,7 +43,13 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+        $formFields = $request->all();
+
+        $formFields['password'] = Hash::make($request->password);
+
+        $profile->fill($formFields)->save();
+
+        return $profile;
     }
 
     /**
@@ -46,6 +57,11 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
+        $profile->delete();
+        return response()->json([
+            'message'=>'Le profile est supprimé.',
+            'id'=>$profile->id,
+            'errors'=>[]
+        ]);
     }
 }

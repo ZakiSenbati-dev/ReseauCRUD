@@ -41,18 +41,14 @@ class ProfilController extends Controller
         //Hash/Cryptage
         $formFields['password'] = Hash::make($request->password);
 
-        //
         if ($request->hasFile('image')) {
             $formFields['image'] = $request->file('image')->store('profile', 'public');
         }else {
             $formFields['image'] = 'profile/Profile-img.png'; // Set your default here
-}
-
-
-
-
+        }
         //insertion
         Profile::create($formFields);
+
 
 
         //Redirections
