@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Resources\ProfileRessource;
 
 class ProfileController extends Controller
 {
@@ -15,8 +16,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::all();
-        return response()->json($profiles);
+        return ProfileRessource::collection(Profile::all());
     }
 
     /**
@@ -26,8 +26,9 @@ class ProfileController extends Controller
     {
         $formFields = $request->all();
         $formFields['password'] = Hash::make($request->password);
+        $profile = Profile::create($formFields);
 
-        return Profile::create($formFields);
+        return new ProfileRessource($profile);
     }
 
     /**
@@ -35,7 +36,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        return new ProfileRessource($profile);
     }
 
     /**
@@ -49,7 +50,7 @@ class ProfileController extends Controller
 
         $profile->fill($formFields)->save();
 
-        return $profile;
+        return new ProfileRessource($profile);
     }
 
     /**

@@ -19,7 +19,7 @@
             <h3>Publications</h3>
             <div class="row my-5">
                 @foreach ($profile->publications as $publication)
-                    <x-publication :canUpdate="auth()->user()->id === $publication->profile_id" :publication="$publication"/>
+                    <x-publication :publication="$publication"/>
                 @endforeach
             </div>
         </div>
