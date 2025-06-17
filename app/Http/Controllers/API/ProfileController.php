@@ -8,15 +8,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\ProfileRessource;
+use Illuminate\Support\Facades\Cache;
 
 class ProfileController extends Controller
 {
+    private const CACHE_KEY = 'profiles_api';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return ProfileRessource::collection(Profile::all());
+        $profiles = Cache::remember(self::CACHE_KEY, 14400, function(){
+
+            return ProfileRessource::collection(Profile::all()) ;
+        });
+
+        return $profiles;
     }
 
     /**
@@ -27,6 +34,7 @@ class ProfileController extends Controller
         $formFields = $request->all();
         $formFields['password'] = Hash::make($request->password);
         $profile = Profile::create($formFields);
+        Cache::forget('self::CACHE_KEY');
 
         return new ProfileRessource($profile);
     }
@@ -50,6 +58,9 @@ class ProfileController extends Controller
 
         $profile->fill($formFields)->save();
 
+        Cache::forget('self::CACHE_KEY');
+
+
         return new ProfileRessource($profile);
     }
 
@@ -59,6 +70,8 @@ class ProfileController extends Controller
     public function destroy(Profile $profile)
     {
         $profile->delete();
+        Cache::forget('self::CACHE_KEY');
+
         return response()->json([
             'message'=>'Le profile est supprimé.',
             'id'=>$profile->id,

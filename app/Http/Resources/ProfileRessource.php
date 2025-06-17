@@ -15,7 +15,10 @@ class ProfileRessource extends JsonResource
     public function toArray(Request $request): array
     {
         $values = parent::toArray($request);
-        $values['image'] = url('storage/' .$values['image']);
+        if(isset($values['image'])){
+            $values['image'] = url('storage/' .$values['image']);
+        }
+
         $values['created'] = date_format(date_create($values['created_at']), 'd-m-y');
 
         unset($values['created_at'], $values['bio']);
