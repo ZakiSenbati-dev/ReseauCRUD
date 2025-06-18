@@ -18,6 +18,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        Cache::delete('self::CACHE_KEY');
         $profiles = Cache::remember(self::CACHE_KEY, 14400, function(){
 
             return ProfileRessource::collection(Profile::all()) ;
