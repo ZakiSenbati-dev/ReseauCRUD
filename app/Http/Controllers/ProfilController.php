@@ -18,9 +18,12 @@ class ProfilController extends Controller
     {
 
         //cache
-        $profiles = Cache::remember('profiles', 10, function(){
+        $page = request('page', 1); // Get the current page from the query string
+
+        $profiles = Cache::remember("profiles_page_$page", 10, function () {
             return Profile::paginate(9);
         });
+
 
         return view('profile.index', compact('profiles'));
     }

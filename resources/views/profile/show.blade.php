@@ -15,8 +15,9 @@
                 </div>
             </div>
         </div>
+
+        <h3>Publications</h3>
         <div class="container w-75 mx-auto">
-            <h3>Publications</h3>
             <div class="row my-5">
                 @foreach ($profile->publications as $publication)
                     <x-publication :publication="$publication" />
