@@ -20,6 +20,7 @@ use App\Http\Controllers\InformationsController;
 */
 
 Route::resource('profiles',ProfilController::class);
+Route::get('/Verify_email/{hash}', [ProfilController::class, 'verifyEmail']);
 Route::resource('publications',PublicationController::class);
 
 

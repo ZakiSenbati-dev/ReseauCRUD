@@ -17,7 +17,8 @@ class Profile extends User
         'email',
         'password',
         'bio',
-        'image'
+        'image',
+        'email_verified_at'
     ]);
 
     public function getImageAttribute($value){

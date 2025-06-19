@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
+use App\Mail\profileMail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\ProfileRequest;
+use Illuminate\Support\Facades\Cache;
 
 class ProfilController extends Controller
 {
@@ -57,14 +59,38 @@ class ProfilController extends Controller
         }else {
             $formFields['image'] = 'profile/Profile-img.png'; // Set your default here
         }
-        //insertion
-        Profile::create($formFields);
 
+        //insertion
+        $profile = Profile::create($formFields);
+
+        Mail::to('zakisenbati22@gmail.com')->send(new profileMail($profile));
 
 
         //Redirections
         return redirect()->route("profiles.index")->with('success', 'Votre compte a été créé avec succès.');
 
+    }
+
+    public function verifyEmail(string $hash){
+
+        [$createdAt,$id] = explode('///',base64_decode($hash)) ;
+        $profile = Profile::findOrFail($id);
+
+        if($profile->created_at->toDateTimeString() !== $createdAt){
+            abort(403);
+        }
+
+        if($profile->email_verified_at !== NULL){
+            return response('Compte déja activé');
+        }
+
+        $name = $profile->name;
+        $email = $profile->email;
+        $profile->fill([
+            'email_verified_at' => time()
+        ])->save();
+
+        return view('profile.email_verified', compact('name', 'email'));
     }
 
     /*it delete but it goes the page 1 always.

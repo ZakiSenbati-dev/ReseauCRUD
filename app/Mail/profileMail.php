@@ -2,23 +2,29 @@
 
 namespace App\Mail;
 
+use App\Models\Profile;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Mail\Attachable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Mail\Attachable;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
 
 class profileMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private string $name;
+    private string $email;
+
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(private readonly Profile $profile)
     {
         //
     }
@@ -29,7 +35,7 @@ class profileMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Profile Mail',
+            subject: 'Profile Confirmation',
         );
     }
 
@@ -38,10 +44,18 @@ class profileMail extends Mailable
      */
     public function content(): Content
     {
-        $body = 'The GOAT Mehhhhhhssi';
+        $date = $this->profile->created_at;
+        $id = $this->profile->id;
+
+        $href =url('').'/Verify_email/'.base64_encode($date.'///'.$id);
+
         return new Content(
             view: 'emails.inscription',
-            with:compact('body')
+            with:[
+                'name'=>$this->profile->name,
+                'email'=>$this->profile->email,
+                'href'=>$href
+            ]
         );
     }
 
@@ -53,9 +67,10 @@ class profileMail extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromStorage('public/profile/1JqsO71kn15Xyh9jvXNNqPgNOrSp5zJVkTZVRAiW.jpg')
-            ->as('image.jpg')
-            ->withMime('image/jpg')
+            Attachment::fromPath(public_path('logo.png'))
+                ->as('logo.png')
+                ->withMime('image/png'),
         ];
     }
+
 }

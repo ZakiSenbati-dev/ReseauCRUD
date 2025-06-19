@@ -25,7 +25,8 @@
                 <button class="btn btn-sm btn-outline-primary">Modifier</button>
             </form>
 
-            <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST" class="mb-0 position-relative">
+            <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST" class="mb-0 position-relative"
+                onsubmit="return confirm('Voulez-vous vraiment supprimer cette profile ?')">
                 @csrf
                 @method('DELETE')
                 <!-- Champ caché pour transmettre la page actuelle -->

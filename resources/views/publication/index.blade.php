@@ -11,10 +11,10 @@
         </div>
     </div>
 
-    <!-- OLD Pagination-->
+    <!--Pagination
     <div class="d-flex justify-content-center">
         {{ $publications->links() }}
-    </div>
+    </div>-->
 
 
 
