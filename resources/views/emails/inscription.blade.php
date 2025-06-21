@@ -9,7 +9,10 @@
 </head>
 <body>
     <div class="container my-2">
-        <img class="mx-auto w-25" src="{{ $message->embed(public_path('logo.png')) }}" alt="Logo">
+        <img src="{{ $message->embed(public_path('logo.png')) }}"
+        alt="Logo"
+        style="display:block; margin:auto; width:300px; height:auto;">
+
         <h1 class="title p-1">Confirm your account</h1>
         <h3>Hello {{ $name }} / {{ $email }} </h3>
 

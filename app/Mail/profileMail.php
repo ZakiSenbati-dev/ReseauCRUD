@@ -66,11 +66,7 @@ class profileMail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            Attachment::fromPath(public_path('logo.png'))
-                ->as('logo.png')
-                ->withMime('image/png'),
-        ];
+        return [];
     }
 
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\profileMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -18,10 +20,24 @@ class LoginController extends Controller
         $login = $request->login;
         $password = $request->password;
         $credentials = ['email' => $login, "password" => $password];
+
         if(Auth::attempt($credentials)){
+
+            $profile = Auth::user();
             //connecter
-            $request->session()->regenerate();
-            return to_route('homepage')->with('success', 'Vous êtes connecté '.$login.".");
+
+            if(($profile->hasVerifiedEmail())){
+                $request->session()->regenerate(true);
+                return to_route('homepage')->with('success', 'Vous êtes connecté '.$login.".");
+            }else{
+                $request->session()->invalidate();
+                $profile = Auth::user();
+                Mail::to($profile->email)->send(new profileMail($profile));
+                return back()->withErrors([
+                    'login'=>'Merci de verifier votre Email pour activer votre compte '.$profile->email,
+                ])->onlyInput('login');
+            }
+
         }
         else{
             //something else

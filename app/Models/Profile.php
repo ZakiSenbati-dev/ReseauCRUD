@@ -3,15 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
+
 
 class Profile extends User implements MustVerifyEmail
 {
-    use HasFactory;
     use SoftDeletes;
-    use Notifiable;
 
     protected $date =['created_at'];
     protected $fillable = ([

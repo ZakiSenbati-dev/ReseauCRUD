@@ -63,7 +63,7 @@ class ProfilController extends Controller
         //insertion
         $profile = Profile::create($formFields);
 
-        Mail::to('zakisenbati22@gmail.com')->send(new profileMail($profile));
+        Mail::to($profile->email)->send(new profileMail($profile));
 
 
         //Redirections
