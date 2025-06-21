@@ -12,9 +12,6 @@ class homeController extends Controller
 {
     public function index(Request $request){
 
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('message', 'Veuillez vous connecter pour accéder au tableau de bord.');
-        }
         // Compteur de visites (tu l’avais déjà)
         $compteur = $request->session()->increment('compteur');
 

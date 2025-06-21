@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 class ProfilController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('auth')->except('verifyEmail');;
     }
 
     public function index(Request $request)
