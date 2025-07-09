@@ -17,7 +17,8 @@ class Profile extends User implements MustVerifyEmail
         'password',
         'bio',
         'image',
-        'email_verified_at'
+        'email_verified_at',
+        'is_admin'
     ]);
 
     public function getImageAttribute($value){

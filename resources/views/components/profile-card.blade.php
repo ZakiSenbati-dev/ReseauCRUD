@@ -19,20 +19,26 @@
             <p class="card-text text-muted">{{ Str::limit($profile->bio, 80) }}</p>
         </div>
 
-        <div class="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center px-3 pb-3">
-            <form action="{{ route('profiles.edit', $profile->id) }}" method="GET" class="mb-0 position-relative">
-                @csrf
-                <button class="btn btn-sm btn-outline-primary">Modifier</button>
-            </form>
+        @auth
+            @if(auth()->user()->is_admin)
+                <div class="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center px-3 pb-3">
+                    <!-- Edit button form -->
+                    <form action="{{ route('profiles.edit', $profile->id) }}" method="GET" class="mb-0 position-relative">
+                        @csrf
+                        <button class="btn btn-sm btn-outline-primary">Modifier</button>
+                    </form>
 
-            <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST" class="mb-0 position-relative"
-                onsubmit="return confirm('Voulez-vous vraiment supprimer cette profile ?')">
-                @csrf
-                @method('DELETE')
-                <!-- Champ caché pour transmettre la page actuelle -->
-                <input type="hidden" name="page" value="{{ request('page', 1) }}">
-                <button class="btn btn-sm btn-outline-danger">Supprimer</button>
-            </form>
-        </div>
+                    <!-- Delete button form -->
+                    <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST" class="mb-0 position-relative"
+                        onsubmit="return confirm('Voulez-vous vraiment supprimer cette profile ?')">
+                        @csrf
+                        @method('DELETE')
+                        <!-- Hidden field to keep track of current page -->
+                        <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                        <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                    </form>
+                </div>
+            @endif
+        @endauth
     </div>
 </div>

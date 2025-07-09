@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Cache;
 class ProfilController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('verifyEmail');;
+        $this->middleware('auth')->except('verifyEmail');
+        $this->middleware('admin')->only(['edit', 'update', 'destroy', 'create', 'store']);
     }
 
     public function index(Request $request)
@@ -43,10 +44,14 @@ class ProfilController extends Controller
 
 
     public function create(){
+
         return view('profile.create');
     }
 
+
     public function store(ProfileRequest $request){
+
+        $formFields['is_admin'] = $request->has('is_admin') ? true : false;
 
         //validation
          $formFields = $request->validated();
@@ -120,16 +125,25 @@ class ProfilController extends Controller
 
     public function update(ProfileRequest $request, Profile $profile)
     {
+
         $formFields = $request->validated();
+
+        if (!empty($request->password)) {
+            $formFields['password'] = Hash::make($request->password);
+        } else {
+            unset($formFields['password']); // Prevent overwriting password with null/empty
+        }
         //Hash/Cryptage
-        $formFields['password'] = Hash::make($request->password);
+        //$formFields['password'] = Hash::make($request->password);
 
         //we don't need to enter the image every time we modified.
         if ($request->hasFile('image')) {
              $formFields['image'] = $request->file('image')->store('profile', 'public');
         }
 
-
+        // Only admins can update is_admin, and since this method is admin-only, we set it explicitly
+        $formFields['is_admin'] = $request->has('is_admin') ? true : false;
+        
         $profile->fill($formFields)->save();
 
         return to_route("profiles.show", $profile->id)->with('success', 'Le compte a été modifié avec succès.');

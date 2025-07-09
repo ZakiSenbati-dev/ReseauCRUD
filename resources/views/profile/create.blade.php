@@ -70,6 +70,16 @@
                                         <label class="form-label">Image</label>
                                         <input type="file" name="image" class="form-control">
                                     </div>
+
+                                    {{-- Checkbox Administrateur --}}
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" name="is_admin" id="is_admin"
+                                            {{ old('is_admin') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_admin">
+                                            <i class="bi bi-shield-lock-fill me-2"></i>Rendre ce profil administrateur
+                                        </label>
+                                    </div>
+
                                 </div>
                             </div>
 

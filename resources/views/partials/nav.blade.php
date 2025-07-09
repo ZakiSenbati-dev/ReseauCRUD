@@ -11,23 +11,37 @@
 
     <div class="collapse navbar-collapse" id="mainNavbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- Accueil -->
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('homepage') }}"><i class="bi bi-house-door me-1"></i> Accueil</a>
+                <a class="nav-link" href="{{ route('homepage') }}"><i class="bi bi-house-door me-1"></i> Accueil</a>
             </li>
+
+            <!-- Tous les profils -->
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('profiles.index') }}"><i class="bi bi-people me-1"></i> Tous les profils</a>
+                <a class="nav-link" href="{{ route('profiles.index') }}"><i class="bi bi-people me-1"></i> Tous les profils</a>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{{ route('profiles.create') }}"><i class="bi bi-plus-circle me-1"></i> Ajouter profil</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{{ route('publications.index') }}"><i class="bi-file-post me-1"></i> Publications</a>
-            </li>
+
+            <!-- Ajouter profil : visible uniquement pour les admins -->
             @auth
+                @if(auth()->user()->is_admin)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profiles.create') }}"><i class="bi bi-plus-circle me-1"></i> Ajouter profil</a>
+                    </li>
+                @endif
+            @endauth
+
+            <!-- Publications -->
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('publications.create') }}"><i class="bi-journal-text me-1"></i> Ajouter publication</a>
+                <a class="nav-link" href="{{ route('publications.index') }}"><i class="bi-file-post me-1"></i> Publications</a>
             </li>
-        @endauth
+
+            <!-- Ajouter publication (visible si connecté) -->
+            @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('publications.create') }}"><i class="bi-journal-text me-1"></i> Ajouter publication</a>
+                </li>
+            @endauth
+
         </ul>
 
 
