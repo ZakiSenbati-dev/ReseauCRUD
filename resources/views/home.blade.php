@@ -1,9 +1,9 @@
-<x-master title="Tableau de bord GOAT">
+<x-master title="Tableau de bord Publify">
     <div class="container py-5">
 
         {{-- Titre principal --}}
         <div class="text-center mb-5">
-            <h1 class="fw-bold">GOAT Dashboard</h1>
+            <h1 class="fw-bold">Publify Dashboard</h1>
             <p class="text-muted">Bienvenue sur votre interface d'administration</p>
             <p class="small">Page visitée <strong>{{ $compteur }}</strong> fois.</p>
         </div>

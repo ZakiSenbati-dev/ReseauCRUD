@@ -38,7 +38,8 @@ class publicationPolicy
      */
     public function update(User $user, publication $publication): bool
     {
-        return $user->id === $publication->profile_id;
+        return $user->is_admin || $user->id === $publication->profile_id;
+
     }
 
     /**
@@ -46,7 +47,8 @@ class publicationPolicy
      */
     public function delete(User $user, publication $publication): bool
     {
-        return $user->id === $publication->profile_id;
+        return $user->is_admin || $user->id === $publication->profile_id;
+
     }
 
     /**
@@ -65,5 +67,5 @@ class publicationPolicy
         //
     }
 
-    
+
 }
